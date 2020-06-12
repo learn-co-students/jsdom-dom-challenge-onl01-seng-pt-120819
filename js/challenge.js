@@ -27,7 +27,15 @@ commentSubmitBtn.addEventListener('click', function (e) {
   commentList.appendChild(comment);
 });
 
-let timerVar = setInterval(increaseCounterPerSecond, 1000);
+document.addEventListener('DOMContentLoaded', () => {
+  if (isRunning()) {
+    setInterval(increaseCounterPerSecond(), 1000);
+  }
+});
+
+function isRunning() {
+  return pauseResumeBtn.innerText == 'pause' ? true : false;
+}
 
 function increaseCounterPerSecond() {
   counter.innerText = parseInt(counter.innerText) + 1;
@@ -35,7 +43,6 @@ function increaseCounterPerSecond() {
 
 function pauseResume() {
   if (pauseResumeBtn.innerText == 'pause') {
-    clearInterval(timerVar);
     pauseResumeBtn.innerText = 'resume';
     allBtns.forEach(function (button) {
       if (button.id != 'pause') {
