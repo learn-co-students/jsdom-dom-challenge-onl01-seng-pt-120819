@@ -8,31 +8,31 @@ const commentInput = document.getElementById('comment-input');
 const commentList = document.getElementById('list');
 const commentSubmitBtn = document.getElementById('submit');
 const allBtns = document.querySelectorAll('button');
-
-minusBtn.addEventListener('click', () => {
-  counter.innerText = parseInt(counter.innerText) - 1;
-});
-plusBtn.addEventListener('click', () => {
-  counter.innerText = parseInt(counter.innerText) + 1;
-});
-
-heartBtn.addEventListener('click', addLike);
-
-pauseResumeBtn.addEventListener('click', pauseResume);
-
-commentSubmitBtn.addEventListener('click', function (e) {
-  e.preventDefault();
-  let comment = document.createElement('p');
-  comment.innerText = commentInput.value;
-  commentList.appendChild(comment);
-});
+const likes = {};
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (isRunning()) {
-    setInterval(() => {
+  minusBtn.addEventListener('click', () => {
+    counter.innerText = parseInt(counter.innerText) - 1;
+  });
+  plusBtn.addEventListener('click', () => {
+    counter.innerText = parseInt(counter.innerText) + 1;
+  });
+
+  heartBtn.addEventListener('click', addLike);
+
+  pauseResumeBtn.addEventListener('click', pauseResume);
+
+  commentSubmitBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    let comment = document.createElement('p');
+    comment.innerText = commentInput.value;
+    commentList.appendChild(comment);
+  });
+  setInterval(() => {
+    if (isRunning()) {
       increaseCounterPerSecond();
-    }, 1000);
-  }
+    }
+  }, 1000);
 });
 
 function isRunning() {
@@ -60,24 +60,17 @@ function pauseResume() {
 }
 
 function addLike() {
-  let likeAmount;
-  if (likeList.childElementCount > 0) {
-    likeList.childNodes.forEach(function (item) {
-      if (item.id == counter.innerText) {
-        likeAmount += 1;
-      } else {
-        likeAmount = 1;
-        let likeItem = document.createElement('li');
-        likeItem.id = counter.innerText;
-        likeItem.innerText = `${counter.innerText} has been liked ${likeAmount} time`;
-        likeList.appendChild(likeItem);
-      }
-    });
+  let key = parseInt(counter.innerText);
+  likes[key] ? (likes[key] += 1) : (likes[key] = 1);
+
+  if (document.getElementById(`${key}`)) {
+    document.getElementById(
+      `${key}`
+    ).innerText = `${key} has been liked ${likes[key]} times`;
   } else {
-    likeAmount = 1;
     let likeItem = document.createElement('li');
-    likeItem.id = counter.innerText;
-    likeItem.innerText = `${counter.innerText} has been liked ${likeAmount} time`;
+    likeItem.id = key;
+    likeItem.innerText = `${key} has been liked 1 time`;
     likeList.appendChild(likeItem);
   }
 }
