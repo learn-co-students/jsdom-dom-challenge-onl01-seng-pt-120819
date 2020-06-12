@@ -56,7 +56,7 @@ function addLike() {
   if (likeList.childElementCount > 0) {
     likeList.childNodes.forEach(function (item) {
       if (item.id == counter.innerText) {
-        console.log('hey');
+        likeAmount += 1;
       } else {
         likeAmount = 1;
         let likeItem = document.createElement('li');
