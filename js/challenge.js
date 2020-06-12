@@ -29,12 +29,14 @@ commentSubmitBtn.addEventListener('click', function (e) {
 
 document.addEventListener('DOMContentLoaded', () => {
   if (isRunning()) {
-    setInterval(increaseCounterPerSecond(), 1000);
+    setInterval(() => {
+      increaseCounterPerSecond();
+    }, 1000);
   }
 });
 
 function isRunning() {
-  return pauseResumeBtn.innerText == 'pause' ? true : false;
+  return pauseResumeBtn.innerText === 'pause' ? true : false;
 }
 
 function increaseCounterPerSecond() {
@@ -51,7 +53,6 @@ function pauseResume() {
     });
   } else {
     pauseResumeBtn.innerText = 'pause';
-
     allBtns.forEach(function (button) {
       button.disabled = false;
     });
